@@ -1,5 +1,5 @@
 import React from 'react';
-
+//Add social media icons!
 function Footer() {
   return (
     <footer className="footer bg-gray-800 text-white py-4">
