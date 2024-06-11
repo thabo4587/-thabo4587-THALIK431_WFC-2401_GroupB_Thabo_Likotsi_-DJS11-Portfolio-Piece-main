@@ -21,7 +21,7 @@ export const ShowDetail = ({ id }) => {
 
   const audioRef = useRef(null);
 
- /* useEffect(() => {
+  useEffect(() => {
     const fetchShowDetails = async () => {
       try {
         const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
@@ -32,7 +32,7 @@ export const ShowDetail = ({ id }) => {
         setShowDetails(responseData);
         setLoading(false);
 
-        // Load user preferences
+        // Load user preferences saved on local storage
         const storedUserPreferences = JSON.parse(localStorage.getItem("userPreferences")) || {};
         if (
           storedUserPreferences.lastListenedShow === responseData.title &&
@@ -50,7 +50,7 @@ export const ShowDetail = ({ id }) => {
 
     fetchShowDetails();
   }, [id]);
-*/
+
   // Event handlers and helper functions
 
   const handleBackClick = () => {
@@ -61,22 +61,12 @@ export const ShowDetail = ({ id }) => {
     // Define your reset progress logic here
   };
 
+  //options dropdown
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
   };
 
-  const handleAudioPlay = (episode) => {
-    // Define your audio play logic here
-  };
-
-  const handleAudioPause = () => {
-    // Define your audio pause logic here
-  };
-
-  const handleAudioTimeUpdate = () => {
-    // Define your audio time update logic here
-  };
-
+ 
   return (
     <>
       <div className="fixed-buttons">
