@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+//implementing useNavigate hook
+const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 //This will navigate the user straight to the homepage since supabase won't be used
     console.log('Submitted:', { email, password });
+ navigate('/') //Navigating to home page after form submission
+ 
   };
+
+
+
+const goToSignUp = () => {
+  navigate('/signin');
+
+}
+
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -52,7 +66,7 @@ function Login() {
         </button>
 
         <p className="text-center text-gray-400 mt-4">
-          Don't have an account? <button className="text-blue-500 hover:underline">SIGN UP</button>
+          Don't have an account? <button onClick={goToSignUp} className="text-blue-500 hover:underline">SIGN UP</button>
         </p>
       </form>
     </div>
