@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+
+
 //figure out how the data is passed it is using props in showdetail in order to fetch correctly use Useparams and ensure Id is each detail page
 //so figure out router and fix this!
 export const ShowDetail = ({ id }) => {
+  const { id } = useParams();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

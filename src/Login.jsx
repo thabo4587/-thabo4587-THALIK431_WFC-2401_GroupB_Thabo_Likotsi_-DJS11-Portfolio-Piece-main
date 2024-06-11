@@ -6,7 +6,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here (e.g., send data to server)
+//This will navigate the user straight to the homepage since supabase won't be used
     console.log('Submitted:', { email, password });
   };
 
