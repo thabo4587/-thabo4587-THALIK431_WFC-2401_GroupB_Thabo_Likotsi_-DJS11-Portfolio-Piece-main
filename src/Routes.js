@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Login';
-import SignIn from './SignUp';
+import SignUp from './SignUp';
 import Header from './Header';
 import HomePage from './HomePage';
 import Footer from './Footer';
@@ -13,7 +13,7 @@ function RoutesComponent() {
     <>
       <Header /> 
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/show/:id" element={<ShowDetail />} />

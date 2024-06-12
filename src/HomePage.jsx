@@ -34,6 +34,10 @@ function HomePage() {
     navigate('/favorites');
   };
 
+  const handleMoreInfoClick = () => {
+    navigate('/showdetails'); // Navigate to the details page
+  };
+
   return (
     <main className="main-content">
       <div className="flex justify-between items-center mb-4">
@@ -65,7 +69,12 @@ function HomePage() {
             <div className="px-6 py-4">
               <img className="w-full h-48 object-cover" src={preview.image} alt={preview.title} />
               <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded">More Info</button>
+              <button 
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
+                onClick={handleMoreInfoClick} // Attach click event handler
+              >
+                More Info
+              </button>
               <p className="text-gray-700">Seasons: {preview.seasons}</p>
               <p className="text-gray-700">Genres: {preview.genres.join(', ')}</p>
               <p className="text-gray-700">Last Updated: {new Date(preview.updated).toLocaleDateString()}</p>
@@ -78,3 +87,4 @@ function HomePage() {
 }
 
 export default HomePage;
+
