@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import{ useParams, useNavigate } from "react-router-dom";
 
 
 export const ShowDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //dropdown
   const [selectedSeason, setSelectedSeason] = useState(null);
+  //audio state variable
   const [audioProgress, setAudioProgress] = useState(0);
 
   const audioRef = useRef(null);
@@ -34,6 +37,8 @@ export const ShowDetail = () => {
 
   const handleBackClick = () => {
     // Define your back click logic here
+    //Using navigate and -1 rule
+    navigate(-1);
   };
 
   const handleResetProgress = () => {
