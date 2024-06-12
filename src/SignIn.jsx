@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const goToHome = () => {
+    navigate('/homepage');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your login logic here (e.g., send data to server)
     console.log('Submitted:', { email, password });
+
+    // Navigate to homepage after successful login
+    goToHome();
   };
 
   return (
@@ -45,6 +54,7 @@ function SignIn() {
         </div>
 
         <button 
+          onClick = { goToHome }
           type="submit" 
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         >
@@ -52,7 +62,7 @@ function SignIn() {
         </button>
 
         <p className="text-center text-gray-400 mt-4">
-         Already have an account? <button className="text-blue-500 hover:underline">SIGN UP</button>
+          Already have an account? <button className="text-blue-500 hover:underline">SIGN UP</button>
         </p>
       </form>
     </div>

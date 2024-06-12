@@ -1,28 +1,27 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import SignIn from './SignIn';
 import Header from './Header';
 import HomePage from './HomePage';
 import Footer from './Footer';
-import ShowDetail from './ShowDetail';
+import ShowDetail from './ShowDetails';
 import Favourites from './Favourites';
-//need to change sign in to sign up!!some time
-function Routes() {
+
+function RoutesComponent() {
   return (
     <>
-    <Header /> 
-    <Switch>
-      <Route exact path="/" component={SignIn} />
-      <Route path="/homepage" component={HomePage} />
-      <Route path="/login" component={Login} />
-      <Route path="/show/:id" component={ShowDetail} />
-      <Route path="/favorites" component={Favourites} />
-    
-    </Switch>
-    <Footer /> 
-  </>
+      <Header /> 
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/show/:id" element={<ShowDetail />} />
+        <Route path="/favorites" element={<Favourites />} />
+      </Routes>
+      <Footer /> 
+    </>
   );
 }
 
-export default Routes;
+export default RoutesComponent;

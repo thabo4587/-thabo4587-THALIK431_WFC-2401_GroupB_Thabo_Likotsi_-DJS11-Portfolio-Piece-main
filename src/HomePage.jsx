@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
   const [previews, setPreviews] = useState([]);
   const [filterOption, setFilterOption] = useState("none");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://podcast-api.netlify.app")
@@ -13,8 +15,6 @@ function HomePage() {
       });
   }, []);
 
-
-  //sorting functions this is a utility function!import it!
   const sortPreviews = (previews) => {
     switch (filterOption) {
       case "titleAsc":
@@ -30,9 +30,10 @@ function HomePage() {
     }
   };
 
+  const handleFavouritesClick = () => {
+    navigate('/favorites');
+  };
 
-
-// grid layout for home page
   return (
     <main className="main-content">
       <div className="flex justify-between items-center mb-4">
@@ -51,7 +52,12 @@ function HomePage() {
             <option value="dateDesc">Newest First</option>
           </select>
         </div>
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded">Favourites</button>
+        <button 
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
+          onClick={handleFavouritesClick}
+        >
+          Favourites
+        </button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {sortPreviews(previews).map((preview) => (
@@ -63,7 +69,6 @@ function HomePage() {
               <p className="text-gray-700">Seasons: {preview.seasons}</p>
               <p className="text-gray-700">Genres: {preview.genres.join(', ')}</p>
               <p className="text-gray-700">Last Updated: {new Date(preview.updated).toLocaleDateString()}</p>
-              <p className="text-gray-700">2022</p>
             </div>
           </div>
         ))}

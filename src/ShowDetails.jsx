@@ -2,22 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 
-//figure out how the data is passed it is using props in showdetail in order to fetch correctly use Useparams and ensure Id is each detail page
-//so figure out router and fix this!
-export const ShowDetail = ({ id }) => {
+export const ShowDetail = () => {
   const { id } = useParams();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
-
-  const [userPreferences, setUserPreferences] = useState({
-    lastListenedShow: null,
-    lastListenedEpisode: null,
-    lastListenedTimestamp: 0,
-  });
 
   const audioRef = useRef(null);
 
@@ -31,16 +22,6 @@ export const ShowDetail = ({ id }) => {
         const responseData = await response.json();
         setShowDetails(responseData);
         setLoading(false);
-
-        // Load user preferences saved on local storage
-        const storedUserPreferences = JSON.parse(localStorage.getItem("userPreferences")) || {};
-        if (
-          storedUserPreferences.lastListenedShow === responseData.title &&
-          storedUserPreferences.lastListenedEpisode
-        ) {
-          setSelectedSeason(storedUserPreferences.lastListenedEpisode.season);
-          setAudioProgress(parseFloat(storedUserPreferences.lastListenedTimestamp) || 0);
-        }
       } catch (fetchError) {
         console.error("Fetch error:", fetchError);
         setError("Error fetching show details. Please try again later.");
@@ -51,8 +32,6 @@ export const ShowDetail = ({ id }) => {
     fetchShowDetails();
   }, [id]);
 
-  // Event handlers and helper functions
-
   const handleBackClick = () => {
     // Define your back click logic here
   };
@@ -61,12 +40,22 @@ export const ShowDetail = ({ id }) => {
     // Define your reset progress logic here
   };
 
-  //options dropdown
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
   };
 
- 
+  const handleAudioPlay = (episode) => {
+    // Define your audio play logic here
+  };
+
+  const handleAudioPause = () => {
+    // Define your audio pause logic here
+  };
+
+  const handleAudioTimeUpdate = () => {
+    // Define your audio time update logic here
+  };
+
   return (
     <>
       <div className="fixed-buttons">
@@ -115,9 +104,7 @@ export const ShowDetail = ({ id }) => {
                       <div key={episode.episode} className="episode-card">
                         <h4>{`Episode ${episode.episode}: ${episode.title}`}</h4>
                         <p>{episode.description}</p>
-                     
-                     
-                    
+
                         <audio
                           ref={audioRef}
                           controls
@@ -130,7 +117,6 @@ export const ShowDetail = ({ id }) => {
                           <source src={episode.file} type="audio/mpeg" />
                           Your browser does not support the audio element.
                         </audio>
-
 
                         <p>Current Progress: {audioProgress.toFixed(2)} seconds</p>
                       </div>

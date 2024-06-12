@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './Routes'; // Assuming Routes is in a file named Routes.js
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RoutesComponent from './Routes'; // Renamed to avoid confusion
 
 function App() {
   return (
     <Router>
-      <Routes /> {/* Render the Routes component */}
+      <RoutesComponent />
     </Router>
   );
 }
