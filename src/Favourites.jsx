@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const useFavorites = () => {
+const Favourites = () => {
   const [favorites, setFavorites] = useState([]);
+  const [filterOption, setFilterOption] = useState('none');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites'));
@@ -24,13 +27,6 @@ const useFavorites = () => {
       prevFavorites.filter((fav) => fav.episode.episode !== episodeNumber)
     );
   };
-
-  return { favorites, addToFavorites, removeFromFavorites };
-};
-
-const Favourites = () => {
-  const { favorites, removeFromFavorites } = useFavorites();
-  const [filterOption, setFilterOption] = useState('none');
 
   const handleRemoveFavorite = (episodeId) => {
     removeFromFavorites(episodeId);
@@ -66,7 +62,7 @@ const Favourites = () => {
             <p className="text-xs mb-2">Added on: {new Date(dateAdded).toLocaleDateString()}</p>
             <audio className="w-full" controls>
               <source src={episode.file} type="audio/mpeg" />
-              Your browser does not support the audio element.
+             Playing...
             </audio>
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline mt-2"
@@ -86,3 +82,6 @@ const Favourites = () => {
 };
 
 export default Favourites;
+
+
+ 

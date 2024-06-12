@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
-import{ useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-
-export const ShowDetail = () => {
+const ShowDetail = () => {
   const { id } = useParams();
+
+  console.log("ID from useParams:", id);
+
   const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [audioProgress, setAudioProgress] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false); // State to manage audio playing state
 
   const audioRef = useRef(null); // Ref to access the audio element
 
   useEffect(() => {
     const fetchShowDetails = async () => {
       try {
-        const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
+        const response = await fetch(`https://podcast-api.netlify.app/id/10716`);
         if (!response.ok) {
           throw new Error(`Error fetching show details: ${response.status}`);
         }
@@ -26,7 +27,7 @@ export const ShowDetail = () => {
         setLoading(false);
       } catch (fetchError) {
         console.error("Fetch error:", fetchError);
-        setError("Error fetching show details. Please try again later.");
+        setError("Error fetching show details sorry. Please try again later.");
         setLoading(false);
       }
     };
@@ -35,16 +36,14 @@ export const ShowDetail = () => {
   }, [id]);
 
   const handleBackClick = () => {
-    // Define your back click logic here
-    //Using navigate and -1 rule to go back to home page
-    navigate(-1);
+    navigate(-1); // Navigates back to the previous page
   };
 
   const handleResetProgress = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = 0; // Set current time of audio to beginning
-      setAudioProgress(0); // Update state to reflect the reset progress
-      setIsPlaying(false); // Pause the audio if it's playing
+      audioRef.current.currentTime = 0; // Resets audio playback to the beginning
+      setAudioProgress(0); // Resets progress state
+      setIsPlaying(false); // Pauses audio playback
     }
   };
 
@@ -52,21 +51,20 @@ export const ShowDetail = () => {
     setSelectedSeason(event.target.value);
   };
 
-  const handleAudioPlay = (episode) => {
+  const handleAudioPlay = () => {
     setIsPlaying(true);
   };
 
   const handleAudioPause = () => {
- if (audioRef.current) {
- audioRef.current.pause();
- setIsPlaying(false);
- }
-
-};
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   const handleAudioTimeUpdate = () => {
-const currentTime = audioRef.current.cureentTime;
-setAudioProgress(currentTime);
+    const currentTime = audioRef.current.currentTime;
+    setAudioProgress(currentTime);
   };
 
   return (
@@ -77,6 +75,9 @@ setAudioProgress(currentTime);
     </button>
     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={handleResetProgress}>
       Reset All Listening History
+    </button>
+    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={handleResetProgress}>
+     Favourites
     </button>
   </div>
 
@@ -89,6 +90,9 @@ setAudioProgress(currentTime);
         </div>
         <div className="md:w-2/3 md:pl-6">
           <h1 className="text-3xl font-bold text-blue-700 mb-2">{showDetails.title}</h1>
+          <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={handleResetProgress}>
+     Add to Favourites
+    </button> 
           <p className="text-gray-700 mb-4">{showDetails.description}</p>
 
           <div className="mb-4">
@@ -101,6 +105,7 @@ setAudioProgress(currentTime);
               value={selectedSeason || ""}
               className="border border-gray-300 rounded p-1 ml-2"
             >
+              
               <option value="" disabled>
                 Select a season
               </option>
