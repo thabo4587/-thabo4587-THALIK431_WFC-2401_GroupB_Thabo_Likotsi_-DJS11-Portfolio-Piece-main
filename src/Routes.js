@@ -11,7 +11,6 @@ import Favourites from './Favourites';
 function RoutesComponent() {
   return (
     <>
-      <Header /> 
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
