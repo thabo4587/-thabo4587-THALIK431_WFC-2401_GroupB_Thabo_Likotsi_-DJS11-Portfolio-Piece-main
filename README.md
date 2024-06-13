@@ -1,4 +1,4 @@
-![image](https://github.com/thabo4587/THALIK431_WFC-2401_GroupB_Thabo_Likotsi_-DJS11-Portfolio-Piece/assets/142932054/98178dc5-02e2-4c26-ab23-6048f4222427)# AudioPod
+# AudioPod DJS11
 
 AudioPod is a React-based web application designed for discovering and listening to podcasts. Built with Tailwind CSS for styling, AudioPod offers a user-friendly interface for managing and exploring various podcast shows. This documentation will guide you through the installation process, provide an overview of the implemented features, and highlight areas that need further development.
 
