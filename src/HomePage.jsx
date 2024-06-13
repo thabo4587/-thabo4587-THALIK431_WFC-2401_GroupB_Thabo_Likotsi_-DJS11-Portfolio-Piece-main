@@ -3,17 +3,36 @@ import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
   const [previews, setPreviews] = useState([]);
+  const [filteredPreviews, setFilteredPreviews] = useState([]);
   const [filterOption, setFilterOption] = useState("none");
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://podcast-api.netlify.app")
+    fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setPreviews(data);
+        setFilteredPreviews(data); // Initialize filtered previews with all previews
       });
   }, []);
+
+  useEffect(() => {
+    //search filter implementation
+    // Filter previews based on search term
+    if (searchTerm.trim() === "") {
+      setFilteredPreviews(previews); // Reset to all previews if search term is empty
+    } else {
+      const searchResults = previews.filter(show =>
+        show.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredPreviews(searchResults);
+    }
+  }, [searchTerm, previews]);
+
+
+  //sorting function! this is a utility function in utils.
 
   const sortPreviews = (previews) => {
     switch (filterOption) {
@@ -34,8 +53,14 @@ function HomePage() {
     navigate('/favorites');
   };
 
-  const handleMoreInfoClick = () => {
-    navigate('/showdetails'); // Navigate to the details page
+  const handleMoreInfoClick = (showId) => {
+    navigate(`/showdetails/${showId}`); // Navigate to the details page for a specific show
+  };
+// I need to implement genre filter functionality
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform search when form is submitted
+    // setSearchTerm(searchTerm); // This line isn't necessary as searchTerm is already updated
   };
 
   return (
@@ -63,15 +88,29 @@ function HomePage() {
           Favourites
         </button>
       </div>
+
+      <form onSubmit={handleSubmit} className="mb-4">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for a show..."
+          className="w-84 md:w-48 sm:w-40 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
+          Search
+        </button>
+      </form>
+
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        {sortPreviews(previews).map((preview) => (
+        {sortPreviews(filteredPreviews).map((preview) => (
           <div key={preview.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="px-6 py-4">
               <img className="w-full h-48 object-cover" src={preview.image} alt={preview.title} />
               <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
               <button 
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
-                onClick={handleMoreInfoClick} // Attach click event handler
+                onClick={() => handleMoreInfoClick(preview.id)} // Pass show ID to handler
               >
                 More Info
               </button>
@@ -86,7 +125,4 @@ function HomePage() {
   );
 }
 
-
-
 export default HomePage;
-
