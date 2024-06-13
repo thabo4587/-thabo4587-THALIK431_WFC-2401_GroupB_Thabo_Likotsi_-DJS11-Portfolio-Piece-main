@@ -1,6 +1,8 @@
-# AudioPod
+# AudioPod DJS11
 
 AudioPod is a React-based web application designed for discovering and listening to podcasts. Built with Tailwind CSS for styling, AudioPod offers a user-friendly interface for managing and exploring various podcast shows. This documentation will guide you through the installation process, provide an overview of the implemented features, and highlight areas that need further development.
+
+I've succesfully deployed my site to netlify:https://whimsical-sprinkles-e8a717.netlify.app/ I just need to design a logo and favicon.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -37,6 +39,8 @@ Podcast shows data is fetched from an external API using the useEffect hook in R
 The filtering functionality allows users to filter podcasts based on categories or search terms. A filter input component captures user input, which is then used to filter the list of podcasts in real-time. This enhances the user experience by making it easier to find specific shows.
 
 ## Upcoming Features
+## Build a logo and create a favicon
+
 
 ### Fetching Episode and Sound Data
 
