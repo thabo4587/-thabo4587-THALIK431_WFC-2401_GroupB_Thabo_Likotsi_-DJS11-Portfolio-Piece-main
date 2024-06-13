@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# AudioPod
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AudioPod is a React-based web application designed for discovering and listening to podcasts. Built with Tailwind CSS for styling, AudioPod offers a user-friendly interface for managing and exploring various podcast shows. This documentation will guide you through the installation process, provide an overview of the implemented features, and highlight areas that need further development.
 
-## Available Scripts
+## Table of Contents
+- [Installation](#installation)
+- [What I've done so far](#features)
+  - [Login and Sign Up Pages](#login-and-sign-up-pages)
+  - [Fetching Podcast Shows Data](#fetching-podcast-shows-data)
+  - [Filtering Shows](#filtering-shows)
+  - [What needs to ve done](#upcoming-features)
+    - [Fetching Episode and Sound Data](#fetching-episode-and-sound-data)
+    - [Search Functionality](#search-functionality)
+    - [Login and Sign Up Button Toggles](#login-and-sign-up-button-toggles)
+    - [Favorites Page Fixes](#favorites-page-fixes)
+- [Contributing](#contributing)
+- [License](#license)
 
-In the project directory, you can run:
+## Installation
 
-### `npm start`
+1. **Clone the repository**: Clone the project repository from GitHub to your local machine.
+2. **Install dependencies**: Navigate to the project directory and install the necessary dependencies using npm.
+3. **Start the development server**: Run the development server and open the application in your browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Login and Sign Up Pages
 
-### `npm test`
+The login and sign-up pages are implemented using React components and styled with Tailwind CSS. These pages enable users to create an account and log in to access personalized features. The login page includes form fields for email and password with client-side validation. The sign-up page includes fields for username, email, and password, also with client-side validation.I also implemented routing to this project allowing sign up to go straight to homepage.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Fetching Podcast Shows Data
 
-### `npm run build`
+Podcast shows data is fetched from an external API using the useEffect hook in React. The data is stored in the component state and displayed in a user-friendly format. The fetching process includes handling potential errors and ensuring data is displayed only after a successful retrieval allowing me to display data on homepage.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Filtering Shows
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The filtering functionality allows users to filter podcasts based on categories or search terms. A filter input component captures user input, which is then used to filter the list of podcasts in real-time. This enhances the user experience by making it easier to find specific shows.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Upcoming Features
 
-### `npm run eject`
+### Fetching Episode and Sound Data
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Currently, I am struggling with implementing the functionality to fetch episode and sound data. This feature will retrieve detailed information about each podcast episode, including the audio files, and display them in the application.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Search Functionality
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+A search bar will be implemented to allow users to search for specific podcasts or episodes. This feature will include capturing user input, applying the search term to filter the podcast data, and displaying the search results for the home page.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Login and Sign Up Button Toggles
 
-## Learn More
+Ensure that the login and sign-up buttons correctly toggle between the respective forms. This involves implementing a mechanism to switch the view from the login form to the sign-up form and vice versa, based on user interaction I will implement react router in order to achieve this.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Favorites Page Fixes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+I also need to fix the favorites page to ensure it correctly displays the user's favorite podcasts. This will involve debugging and enhancing the functionality that manages the user's favorite list, ensuring accurate retrieval and display of data.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
