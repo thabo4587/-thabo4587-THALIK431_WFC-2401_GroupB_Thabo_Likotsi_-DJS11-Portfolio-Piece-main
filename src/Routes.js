@@ -8,17 +8,17 @@ import Footer from './Footer';
 import ShowDetail from './ShowDetails';
 import Favourites from './Favourites';
 // import NotFound from './NotFound';- a NotFound component
-
+//  <Header />
 function RoutesComponent() {
   return (
     <>
       <ShowDetail />
-      <Header />
+     
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/showdetail/:id" element={<ShowDetail />} />
+        <Route path="/id/:id" element={<ShowDetail />} />
         <Route path="/favorites" element={<Favourites />} />     
       </Routes>
       <Footer /> 
@@ -27,3 +27,14 @@ function RoutesComponent() {
 }
 // <Route path="*" element={<NotFound />} /> {/* 404 route */}
 export default RoutesComponent;
+
+/*
+use conditional rendering  
+
+use state variable   const [showFooter, setShowFooter] = useState(true); // State to toggle Footer visibility
+<Route path="/home">
+showFooter && <Footer />
+</Route>
+
+
+*/

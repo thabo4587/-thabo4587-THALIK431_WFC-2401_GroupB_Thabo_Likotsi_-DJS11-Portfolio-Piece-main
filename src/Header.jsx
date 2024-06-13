@@ -11,6 +11,9 @@ function Header() {
             placeholder="Search podcast"
             className="w-84 md:w-48 sm:w-40 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+
+
+          
         </nav>
       </div>
     </header>

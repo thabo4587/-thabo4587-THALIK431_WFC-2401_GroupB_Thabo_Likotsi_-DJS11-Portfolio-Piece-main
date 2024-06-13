@@ -13,26 +13,24 @@ const ShowDetail = () => {
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [audioProgress, setAudioProgress] = useState(0);
 
-  const audioRef = useRef(null); // Ref to access the audio element
+  const audioRef = useRef(null); // Ref to access the audio element 10716
 
   useEffect(() => {
-    const fetchShowDetails = async () => {
-      try {
-        const response = await fetch(`https://podcast-api.netlify.app/id/10716`);
+    fetch('https://podcast-api.netlify.app/id/10716')
+      .then((response) => {
         if (!response.ok) {
           throw new Error(`Error fetching show details: ${response.status}`);
         }
-        const responseData = await response.json();
-        setShowDetails(responseData);
+        return response.json();
+      })
+      .then((data) => {
+        setShowDetails(data);
         setLoading(false);
-      } catch (fetchError) {
-        console.error("Fetch error:", fetchError);
-        setError("Error fetching show details sorry. Please try again later.");
+      })
+      .catch((error) => {
+        setError(error.message);
         setLoading(false);
-      }
-    };
-
-    fetchShowDetails();
+      });
   }, [id]);
 
   const handleBackClick = () => {
@@ -90,9 +88,7 @@ const ShowDetail = () => {
         </div>
         <div className="md:w-2/3 md:pl-6">
           <h1 className="text-3xl font-bold text-blue-700 mb-2">{showDetails.title}</h1>
-          <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={handleResetProgress}>
-     Add to Favourites
-    </button> 
+        
           <p className="text-gray-700 mb-4">{showDetails.description}</p>
 
           <div className="mb-4">
@@ -125,7 +121,9 @@ const ShowDetail = () => {
                   <div key={episode.episode} className="mb-4">
                     <h4 className="text-blue-700">{`Episode ${episode.episode}: ${episode.title}`}</h4>
                     <p>{episode.description}</p>
-
+          <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded-full" onClick={handleResetProgress}>
+     Add to Favourites
+    </button> 
                     <audio
                       ref={audioRef}
                       controls
