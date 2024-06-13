@@ -124,6 +124,9 @@ const ShowDetail = () => {
                     </option>
                   ))}
                 </select>
+                <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded-full">
+                          Add to Favourites
+                        </button>
               </div>
               {selectedSeason && (
                 <div className="mb-4">
@@ -133,9 +136,7 @@ const ShowDetail = () => {
                       <div key={episode.episode} className="mb-4">
                         <h4 className="text-blue-700">{`Episode ${episode.episode}: ${episode.title}`}</h4>
                         <p>{episode.description}</p>
-                        <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded-full">
-                          Add to Favourites
-                        </button>
+                       
                         <audio
                           ref={audioRef}
                           controls

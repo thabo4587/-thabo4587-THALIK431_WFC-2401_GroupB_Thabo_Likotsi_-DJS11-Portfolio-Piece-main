@@ -90,16 +90,14 @@ function HomePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="mb-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search for a show..."
-          className="w-84 md:w-48 sm:w-40 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
-          Search
-        </button>
+      <input
+      type="text"
+       value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+         placeholder="Search..."
+           className="w-full md:w-96 sm:w-80 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+       
       </form>
 
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
