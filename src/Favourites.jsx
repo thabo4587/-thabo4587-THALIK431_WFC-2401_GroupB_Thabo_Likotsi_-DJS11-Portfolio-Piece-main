@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Favourites = () => {
+const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [filterOption, setFilterOption] = useState('none');
   const navigate = useNavigate();
@@ -27,21 +27,9 @@ const Favourites = () => {
     removeFromFavorites(episodeId);
   };
 
-  // Sorting logic
-  const sortedFavorites = [...favorites].sort((a, b) => {
-    switch (filterOption) {
-      case 'titleAsc':
-        return a.show.localeCompare(b.show);
-      case 'titleDesc':
-        return b.show.localeCompare(a.show);
-      case 'dateAsc':
-        return new Date(a.dateAdded) - new Date(b.dateAdded);
-      case 'dateDesc':
-        return new Date(b.dateAdded) - new Date(a.dateAdded);
-      default:
-        return 0;
-    }
-  });
+  const addToFavorites = (newFavorite) => {
+    setFavorites((prevFavorites) => [...prevFavorites, newFavorite]);
+  };
 
   return (
     <div className="container mx-auto py-8">
@@ -49,7 +37,9 @@ const Favourites = () => {
       {/* Sorting options */}
       <div className="flex justify-between items-center mb-4">
         <div>
-          <label htmlFor="filterOption" className="mr-2 font-semibold">Sort By:</label>
+          <label htmlFor="filterOption" className="mr-2 font-semibold">
+            Sort By:
+          </label>
           <select
             id="filterOption"
             className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,7 +56,7 @@ const Favourites = () => {
       </div>
       {/* Favorite episodes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {sortedFavorites.map(({ episode, show, season, dateAdded }) => (
+        {favorites.map(({ episode, show, season, dateAdded }) => (
           <div key={episode.episode} className="bg-gray-200 p-4 rounded-lg shadow-md">
             <h3 className="font-semibold">{show}</h3>
             <h4 className="text-sm mb-2">{`Season ${season}, Episode ${episode.episode}: ${episode.title}`}</h4>
@@ -92,4 +82,4 @@ const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default Favorites;

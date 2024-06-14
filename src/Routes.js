@@ -7,15 +7,13 @@ import HomePage from './HomePage';
 import Footer from './Footer';
 import ShowDetail from './ShowDetails';
 import Favourites from './Favourites';
-// import NotFound from './NotFound'; // Assuming you have a NotFound component
 
-function RoutesComponent() {
+function RoutesComponent({ addToFavorites }) {
   const location = useLocation();
   const [showFooter, setShowFooter] = useState(true);
 
   useEffect(() => {
     // Hide footer on specific routes
-    //removing footer from sign up page
     if (location.pathname === '/' || location.pathname === '/login') {
       setShowFooter(false);
     } else {
@@ -30,13 +28,15 @@ function RoutesComponent() {
         <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path ="/showdetails/:id" element={<ShowDetail />} />
+        <Route
+          path="/showdetails/:id"
+          element={<ShowDetail addToFavorites={addToFavorites} />} // Pass addToFavorites as prop
+        />
         <Route path="/favorites" element={<Favourites />} />
-       
       </Routes>
-      {showFooter && <Footer />} {/* Conditionally render Footer */}
+      {showFooter && <Footer />}
     </>
   );
 }
-// <Route path="*" element={<NotFound />} /> {/* 404 route */}
+
 export default RoutesComponent;
