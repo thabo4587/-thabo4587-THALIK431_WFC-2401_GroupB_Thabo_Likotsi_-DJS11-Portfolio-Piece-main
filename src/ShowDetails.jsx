@@ -42,6 +42,13 @@ const ShowDetail = () => {
     navigate(-1); // Navigates back to the previous page
   };
 
+  const addToFavorites = (episode, show, season) => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const newFavorite = { episode, show, season, dateAdded: new Date() };
+    const updatedFavorites = [...storedFavorites, newFavorite];
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -91,7 +98,7 @@ const ShowDetail = () => {
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={handleResetProgress}>
           Reset All Listening History
         </button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded" onClick={() => navigate('/favorites')}>
           Favourites
         </button>
       </div>
@@ -124,9 +131,6 @@ const ShowDetail = () => {
                     </option>
                   ))}
                 </select>
-                <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded-full">
-                          Add to Favourites
-                        </button>
               </div>
               {selectedSeason && (
                 <div className="mb-4">
@@ -151,6 +155,12 @@ const ShowDetail = () => {
                           Your browser does not support the audio element.
                         </audio>
                         <p className="text-gray-700">Current Progress: {audioProgress.toFixed(2)} seconds</p>
+                        <button
+                          className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded-full"
+                          onClick={() => addToFavorites(episode, showDetails.title, selectedSeason)}
+                        >
+                          Add to Favourites
+                        </button>
                       </div>
                     ))}
                 </div>

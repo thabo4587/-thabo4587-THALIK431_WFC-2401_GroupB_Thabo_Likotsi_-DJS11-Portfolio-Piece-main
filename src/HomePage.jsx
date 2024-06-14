@@ -100,7 +100,7 @@ function HomePage() {
        
       </form>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {sortPreviews(filteredPreviews).map((preview) => (
           <div key={preview.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="px-6 py-4">

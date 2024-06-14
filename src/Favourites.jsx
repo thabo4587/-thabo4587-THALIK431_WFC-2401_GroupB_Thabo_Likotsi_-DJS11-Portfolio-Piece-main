@@ -17,11 +17,6 @@ const Favourites = () => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
-  const addToFavorites = (episode, show, season) => {
-    const newFavorite = { episode, show, season, dateAdded: new Date() };
-    setFavorites((prevFavorites) => [...prevFavorites, newFavorite]);
-  };
-
   const removeFromFavorites = (episodeNumber) => {
     setFavorites((prevFavorites) =>
       prevFavorites.filter((fav) => fav.episode.episode !== episodeNumber)
@@ -31,6 +26,22 @@ const Favourites = () => {
   const handleRemoveFavorite = (episodeId) => {
     removeFromFavorites(episodeId);
   };
+
+  // Sorting logic
+  const sortedFavorites = [...favorites].sort((a, b) => {
+    switch (filterOption) {
+      case 'titleAsc':
+        return a.show.localeCompare(b.show);
+      case 'titleDesc':
+        return b.show.localeCompare(a.show);
+      case 'dateAsc':
+        return new Date(a.dateAdded) - new Date(b.dateAdded);
+      case 'dateDesc':
+        return new Date(b.dateAdded) - new Date(a.dateAdded);
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="container mx-auto py-8">
@@ -55,14 +66,14 @@ const Favourites = () => {
       </div>
       {/* Favorite episodes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {favorites.map(({ episode, show, season, dateAdded }) => (
+        {sortedFavorites.map(({ episode, show, season, dateAdded }) => (
           <div key={episode.episode} className="bg-gray-200 p-4 rounded-lg shadow-md">
             <h3 className="font-semibold">{show}</h3>
             <h4 className="text-sm mb-2">{`Season ${season}, Episode ${episode.episode}: ${episode.title}`}</h4>
             <p className="text-xs mb-2">Added on: {new Date(dateAdded).toLocaleDateString()}</p>
             <audio className="w-full" controls>
               <source src={episode.file} type="audio/mpeg" />
-             Playing...
+              Playing...
             </audio>
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline mt-2"
@@ -82,6 +93,3 @@ const Favourites = () => {
 };
 
 export default Favourites;
-
-
- 
