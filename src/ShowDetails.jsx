@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePodcast } from './PodCastContext';
+import PropTypes from 'prop-types';
 
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
@@ -69,17 +70,9 @@ const ShowDetail = ({ addToFavorites }) => {
     setAudioProgress(currentTime);
   };
 
-  const handleAddToFavorites = () => {
-    if (showDetails && selectedSeason) {
-      const selectedSeasonData = showDetails.seasons.find(
-        (s) => s.season.toString() === selectedSeason
-      );
-      if (selectedSeasonData) {
-        const firstEpisode = selectedSeasonData.episodes[0]; // Assuming first episode as an example
-        addToFavorites(firstEpisode);
-        alert(`Added ${firstEpisode.title} to Favorites!`);
-      }
-    }
+  const handleAddToFavorites = (episode) => {
+    addToFavorites(episode, showDetails.title, selectedSeason);
+    alert(`Added ${episode.title} to Favorites!`);
   };
 
   if (loading) {
@@ -108,12 +101,6 @@ const ShowDetail = ({ addToFavorites }) => {
           onClick={handleResetProgress}
         >
           Reset All Listening History
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded"
-          onClick={handleAddToFavorites}
-        >
-          Add to Favorites
         </button>
       </div>
 
@@ -172,6 +159,12 @@ const ShowDetail = ({ addToFavorites }) => {
                         <source src={episode.file} type="audio/mpeg" />
                         Your browser does not support the audio element.
                       </audio>
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                        onClick={() => handleAddToFavorites(episode)}
+                      >
+                        Add to Favorites
+                      </button>
                       <p className="text-gray-700">
                         Current Progress: {audioProgress.toFixed(2)} seconds
                       </p>
@@ -184,6 +177,10 @@ const ShowDetail = ({ addToFavorites }) => {
       </div>
     </>
   );
+};
+
+ShowDetail.propTypes = {
+  addToFavorites: PropTypes.func.isRequired,
 };
 
 export default ShowDetail;

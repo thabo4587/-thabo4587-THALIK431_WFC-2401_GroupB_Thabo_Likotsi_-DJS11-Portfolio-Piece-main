@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -13,7 +13,6 @@ function RoutesComponent({ addToFavorites }) {
   const [showFooter, setShowFooter] = useState(true);
 
   useEffect(() => {
-    // Hide footer on specific routes
     if (location.pathname === '/' || location.pathname === '/login') {
       setShowFooter(false);
     } else {
@@ -28,10 +27,7 @@ function RoutesComponent({ addToFavorites }) {
         <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/showdetails/:id"
-          element={<ShowDetail addToFavorites={addToFavorites} />} // Pass addToFavorites as prop
-        />
+        <Route path="/showdetails/:id" element={<ShowDetail addToFavorites={addToFavorites} />} />
         <Route path="/favorites" element={<Favourites />} />
       </Routes>
       {showFooter && <Footer />}

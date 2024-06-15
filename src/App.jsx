@@ -1,17 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import RoutesComponent from './Routes'; // Assuming correct import name
+import RoutesComponent from './Routes'; // Make sure RoutesComponent is correctly imported
 import { PodcastProvider } from './PodCastContext';
 
 function App() {
-  // Define addToFavorites function here
-  const addToFavorites = (newFavorite) => {
-    // Implement logic to add to favorites
-    console.log('Adding to favorites:', newFavorite);
-    // Example of localStorage usage for adding to favorites
+  const addToFavorites = (episode, show, season) => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const newFavorite = { episode, show, season, dateAdded: new Date() };
     const updatedFavorites = [...storedFavorites, newFavorite];
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    console.log('Added to favorites:', newFavorite); // Debugging statement
   };
 
   return (

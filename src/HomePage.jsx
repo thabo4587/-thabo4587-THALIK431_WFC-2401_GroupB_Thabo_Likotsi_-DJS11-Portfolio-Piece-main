@@ -1,38 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const genreMapping = {
+  1: 'Personal Growth',
+  2: 'Investigative Journalism',
+  3: 'History',
+  4: 'Comedy',
+  5: 'Entertainment',
+  6: 'Business',
+  7: 'Fiction',
+  8: 'News',
+  9: 'Kids and Family'
+};
+
 function HomePage() {
   const [previews, setPreviews] = useState([]);
   const [filteredPreviews, setFilteredPreviews] = useState([]);
   const [filterOption, setFilterOption] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("none");
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setPreviews(data);
-        setFilteredPreviews(data); // Initialize filtered previews with all previews
+        setFilteredPreviews(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        // Handle error state if needed
       });
   }, []);
 
   useEffect(() => {
-    //search filter implementation
-    // Filter previews based on search term
-    if (searchTerm.trim() === "") {
-      setFilteredPreviews(previews); // Reset to all previews if search term is empty
+    if (searchTerm.trim() === "" && selectedGenre === "none") {
+      setFilteredPreviews(previews);
     } else {
-      const searchResults = previews.filter(show =>
-        show.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const searchResults = previews.filter(show => {
+        const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesGenre = selectedGenre === "none" || (show.genres && show.genres.includes(parseInt(selectedGenre)));
+        return matchesSearch && matchesGenre;
+      });
       setFilteredPreviews(searchResults);
     }
-  }, [searchTerm, previews]);
-
-
-  //sorting function! this is a utility function in utils.
+  }, [searchTerm, selectedGenre, previews]);
 
   const sortPreviews = (previews) => {
     switch (filterOption) {
@@ -54,13 +67,12 @@ function HomePage() {
   };
 
   const handleMoreInfoClick = (showId) => {
-    navigate(`/showdetails/${showId}`); // Navigate to the details page for a specific show
+    navigate(`/showdetails/${showId}`);
   };
-// I need to implement genre filter functionality
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform search when form is submitted
-    // setSearchTerm(searchTerm); // This line isn't necessary as searchTerm is already updated
+    // You can add more logic here if needed
   };
 
   return (
@@ -81,6 +93,20 @@ function HomePage() {
             <option value="dateDesc">Newest First</option>
           </select>
         </div>
+        <div>
+          <label htmlFor="genreFilter" className="mr-2 font-semibold">Filter By Genre:</label>
+          <select
+            id="genreFilter"
+            className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+          >
+            <option value="none">All Genres</option>
+            {Object.entries(genreMapping).map(([id, title]) => (
+              <option key={id} value={id}>{title}</option>
+            ))}
+          </select>
+        </div>
         <button 
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
           onClick={handleFavouritesClick}
@@ -90,14 +116,13 @@ function HomePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="mb-4">
-      <input
-      type="text"
-       value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-         placeholder="Search..."
-           className="w-full md:w-96 sm:w-80 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-/>
-       
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search..."
+          className="w-full md:w-96 sm:w-80 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </form>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -108,13 +133,13 @@ function HomePage() {
               <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
               <button 
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
-                onClick={() => handleMoreInfoClick(preview.id)} // Pass show ID to handler
+                onClick={() => handleMoreInfoClick(preview.id)}
               >
                 More Info
               </button>
               <p className="text-gray-700">Seasons: {preview.seasons}</p>
-              <p className="text-gray-700">Genres: {preview.genres.join(', ')}</p>
-              <p className="text-gray-700">Last Updated: {new Date(preview.updated).toLocaleDateString()}</p>
+              <p className="text-gray-700">Genres: {preview.genres && preview.genres.map(id => genreMapping[id]).join(', ')}</p>
+              <p className="text-gray-700">Last Updated: {preview.updated ? new Date(preview.updated).toLocaleDateString() : 'N/A'}</p>
             </div>
           </div>
         ))}
