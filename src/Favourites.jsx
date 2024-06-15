@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 const Favorites = () => {
@@ -7,30 +6,34 @@ const Favorites = () => {
   const [filterOption, setFilterOption] = useState('none');
   const navigate = useNavigate();
 
+  //This block of code accesses the favourites stored in local storage
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites'));
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     console.log('Stored favorites:', storedFavorites); // Debugging statement
-    if (storedFavorites) {
-      setFavorites(storedFavorites);
-    }
+    setFavorites(storedFavorites);
   }, []);
 
-  useEffect(() => {
-    console.log('Favorites updated:', favorites); // Debugging statement
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
 
+
+ // useEffect(() => {
+ //   console.log('Favorites updated:', favorites); // Debugging statement
+  //  localStorage.setItem('favorites', JSON.stringify(favorites));
+ // }, [favorites]);
+
+// removing favouries from UI
   const removeFromFavorites = (episodeTitle) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.filter((fav) => fav.episode.title !== episodeTitle)
-    );
+    const updatedFavorites = favorites.filter(fav => fav.episode.title !== episodeTitle);
+    setFavorites(updatedFavorites);
     console.log('Removed favorite:', episodeTitle); // Debugging statement
   };
 
+  //Removing favourites
   const handleRemoveFavorite = (episodeTitle) => {
     removeFromFavorites(episodeTitle);
   };
 
+
+  //same sorting function need to save this as a utility function and import it
   const sortedFavorites = [...favorites].sort((a, b) => {
     switch (filterOption) {
       case 'titleAsc':
@@ -89,27 +92,12 @@ const Favorites = () => {
           </div>
         ))}
       </div>
-      {/* Message when no favorites */}
+      {/* Message when no favorites are in local storage */}
       {favorites.length === 0 && (
         <p className="text-center mt-4">No favorites added yet.</p>
       )}
     </div>
   );
-};
-
-Favorites.propTypes = {
-  favorites: PropTypes.arrayOf(
-    PropTypes.shape({
-      episode: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        episode: PropTypes.number.isRequired,
-        file: PropTypes.string.isRequired,
-      }).isRequired,
-      show: PropTypes.string.isRequired,
-      season: PropTypes.number.isRequired,
-      dateAdded: PropTypes.string.isRequired,
-    })
-  ),
 };
 
 export default Favorites;
