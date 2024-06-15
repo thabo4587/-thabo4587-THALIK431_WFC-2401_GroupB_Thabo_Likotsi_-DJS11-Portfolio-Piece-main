@@ -38,17 +38,17 @@ const ShowDetail = ({ addToFavorites }) => {
     }
   }, [id, selectedPodcast]);
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
+ // const handleBackClick = () => {
+  //  navigate(-1);
+ // };
 
-  const handleResetProgress = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      setAudioProgress(0);
-      setIsPlaying(false);
-    }
-  };
+ // const handleResetProgress = () => {
+  //  if (audioRef.current) {
+   //   audioRef.current.currentTime = 0;
+   //   setAudioProgress(0);
+   //   setIsPlaying(false);
+ //   }
+ // };
 
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
@@ -90,18 +90,6 @@ const ShowDetail = ({ addToFavorites }) => {
   return (
     <>
       <div className="flex justify-center">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded"
-          onClick={handleBackClick}
-        >
-          Back to Home
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 mx-2 rounded"
-          onClick={handleResetProgress}
-        >
-          Reset All Listening History
-        </button>
       </div>
 
       <div className="max-w-4xl mx-auto">

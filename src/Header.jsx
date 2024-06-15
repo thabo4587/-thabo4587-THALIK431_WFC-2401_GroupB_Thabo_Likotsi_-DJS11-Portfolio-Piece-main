@@ -33,7 +33,7 @@ function Header() {
             className="text-white font-bold px-4 py-2 rounded-md mx-2 bg-transparent border border-white hover:bg-white hover:text-blue-500 focus:outline-none"
             onClick={handleResetHistory}
           >
-            Reset History
+           LogOut
           </button>
         </nav>
       </div>

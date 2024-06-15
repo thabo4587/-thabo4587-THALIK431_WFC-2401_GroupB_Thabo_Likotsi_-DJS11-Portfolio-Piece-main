@@ -10,19 +10,22 @@ import Favourites from './Favourites';
 
 function RoutesComponent({ addToFavorites }) {
   const location = useLocation();
+  const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
 
   useEffect(() => {
     if (location.pathname === '/' || location.pathname === '/login') {
+      setShowHeader(false);
       setShowFooter(false);
     } else {
+      setShowHeader(true);
       setShowFooter(true);
     }
   }, [location.pathname]);
 
   return (
     <>
-      <Header />
+      {showHeader && <Header />}
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
