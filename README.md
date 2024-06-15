@@ -53,16 +53,17 @@ Ensure that the login and sign-up buttons correctly toggle between the respectiv
 ### Favorites Page Fixes
 
 I also need to fix the favorites page to ensure it correctly displays the user's favorite podcasts. This will involve debugging and enhancing the functionality that manages the user's favorite list, ensuring accurate retrieval and display of data.
+I manged to complete these two:
+User can filter shows by genre.
+User sees what genres a show is associated with when browsing.
 
 ## Updated To-List
 
 ## Core Functionality:
 User can listen to any episode in a season for a show: (placeholder audio track)
-User can filter shows by genre:
-User sees what genres a show is associated with when browsing:
 User sees the number of episodes in a season on the details page:
 User can go back from a season-specific view to a show view:
-Fix loading states: (Ensure loading spinners or indicators are in place)
+Need to fix loading states: (Ensure loading spinners or indicators are in place)
 
 ## Favourites Functionality:
 User can mark/unmark specific episodes as favourites:
@@ -72,20 +73,26 @@ User can arrange favourites by title (A-Z, Z-A):
 User can arrange favourites by most recently updated:
 User can remove episodes from favorites:
 User sees the date/time an episode was added to favorites:
+Still struggling with favorites page....
 
 ## Audio Player
 Audio player is always visible:
 Audio player shows listening progress:
-Persistence & Storage:
+
+
+## Persistence & Storage:
 App remembers episodes listened to all the way through:
 Favorites are persisted in localStorage:
 User can reset listening history:
 
 ## UI Enhancements
-Add Spring animations (e.g., to buttons):
+Add Spring hover animations (e.g., to buttons and navbars):
 Use Material UI for styled buttons:
 Add play  icon shadow hover effect using react icons
 Design a favicon and logo using canvas:
 Fix navigation bar
+
+## Add hamburger bar
+Need to add a hamburger responsive menu for page navigation.
 
 

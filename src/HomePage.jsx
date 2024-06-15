@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
+//genre mapping object to display podcast shows genres
 const genreMapping = {
   1: 'Personal Growth',
   2: 'Investigative Journalism',
