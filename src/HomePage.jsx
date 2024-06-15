@@ -131,7 +131,7 @@ function HomePage() {
         {sortPreviews(filteredPreviews).map((preview) => (
           <div key={preview.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="px-6 py-4">
-              <img className="w-full h-48 object-cover" src={preview.image} alt={preview.title} />
+              <img className="w-full h-auto md:h-auto sm:h-auto object-cover" src={preview.image} alt={preview.title} />
               <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
               <button 
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 

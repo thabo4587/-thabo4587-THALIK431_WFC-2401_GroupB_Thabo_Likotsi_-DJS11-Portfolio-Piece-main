@@ -13,13 +13,6 @@ const Favorites = () => {
     setFavorites(storedFavorites);
   }, []);
 
-
-
- // useEffect(() => {
- //   console.log('Favorites updated:', favorites); // Debugging statement
-  //  localStorage.setItem('favorites', JSON.stringify(favorites));
- // }, [favorites]);
-
 // removing favouries from UI
   const removeFromFavorites = (episodeTitle) => {
     const updatedFavorites = favorites.filter(fav => fav.episode.title !== episodeTitle);
@@ -101,3 +94,19 @@ const Favorites = () => {
 };
 
 export default Favorites;
+
+
+
+
+
+
+
+
+
+
+
+
+ // useEffect(() => {
+ //   console.log('Favorites updated:', favorites); // Debugging statement
+  //  localStorage.setItem('favorites', JSON.stringify(favorites));
+ // }, [favorites]);

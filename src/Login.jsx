@@ -19,7 +19,7 @@ const navigate = useNavigate();
 
 
 const goToSignUp = () => {
-  navigate('/signup');
+  navigate('/');
 
 }
 
