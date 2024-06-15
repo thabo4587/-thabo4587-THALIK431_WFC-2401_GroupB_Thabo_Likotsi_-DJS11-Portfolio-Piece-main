@@ -10,6 +10,10 @@ function SignUp() {
     navigate('/homepage');
   };
 
+  const goToLogin = () => {
+    navigate('/login');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your login logic here (e.g., send data to server)
@@ -23,7 +27,7 @@ function SignUp() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded shadow-md w-96">
         <h2 className="text-4xl text-white font-bold mb-8 text-center">SIGN UP</h2>
-        <h2 className="text-2xl text-white font-semibold mb-4 text-center">Welcome to AudioPod!</h2>
+        <h2 className="text-2xl text-white font-semibold mb-4 text-center">AudioPod</h2>
 
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-300 text-sm font-medium mb-2">
@@ -61,8 +65,10 @@ function SignUp() {
           SUBMIT
         </button>
 
-        <p className="text-center text-gray-400 mt-4">
-          Already have an account? <button className="text-blue-500 hover:underline">SIGN UP</button>
+        <p 
+        onClick={goToLogin}
+        className="text-center text-gray-400 mt-4">
+          Already have an account? <button className="text-blue-500 hover:underline">LOG IN</button>
         </p>
       </form>
     </div>
