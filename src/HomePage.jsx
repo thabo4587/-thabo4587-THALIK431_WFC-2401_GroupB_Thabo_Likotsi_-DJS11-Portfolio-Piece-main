@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-//genre mapping object to display podcast shows genres
+// genre mapping object to display podcast shows genres
 const genreMapping = {
   1: 'Personal Growth',
   2: 'Investigative Journalism',
@@ -21,18 +20,25 @@ function HomePage() {
   const [filterOption, setFilterOption] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("none");
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
+  const [showDetails, setShowDetails] = useState(false); // Add showDetails state
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true); // Set loading to true before fetching data
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
         setPreviews(data);
         setFilteredPreviews(data);
+        setLoading(false); // Set loading to false after data is fetched
+        setShowDetails(data.length > 0); // Check if shows are available
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        // Handle error state if needed
+        setError(error.message); // Set error message
+        setLoading(false); // Set loading to false even if there's an error
       });
   }, []);
 
@@ -77,6 +83,18 @@ function HomePage() {
     // You can add more logic here if needed
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!showDetails) {
+    return <div>No shows available.</div>;
+  }
+
   return (
     <main className="main-content">
       <div className="flex justify-between items-center mb-4">
@@ -109,7 +127,6 @@ function HomePage() {
             ))}
           </select>
         </div>
-      
       </div>
 
       <form onSubmit={handleSubmit} className="mb-4">
