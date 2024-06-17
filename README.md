@@ -76,6 +76,7 @@ Still struggling with favorites page....
 
 ## Audio Player
 Audio player is always visible:
+Fix Audio files
 Audio player shows listening progress:
 App remembers episodes listened to all the way through
 User can listen to any episode in a season for a show: (placeholder audio track)

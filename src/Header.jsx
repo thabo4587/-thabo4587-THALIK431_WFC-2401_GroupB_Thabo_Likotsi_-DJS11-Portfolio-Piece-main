@@ -11,7 +11,7 @@ function Header() {
 
   return (
     <header className="bg-blue-500 py-4">
-      <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
+      <div className="container mx-auto flex flex-col sm:flex-col justify-between items-center px-4">
         <h1 className="text-white text-xl sm:text-2xl font-bold mb-2 sm:mb-0">AudioPod</h1>
         <nav className="flex flex-col sm:flex-row items-center">
           <NavLink
