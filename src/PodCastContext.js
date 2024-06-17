@@ -5,6 +5,7 @@ const PodcastContext = createContext();
 
 export const usePodcast = () => useContext(PodcastContext);
 
+//state variable for details page
 export const PodcastProvider = ({ children }) => {
   const [selectedPodcast, setSelectedPodcast] = useState(null);
 // implementing context

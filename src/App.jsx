@@ -11,7 +11,7 @@ function App() {
     const newFavorite = { episode, show, season, dateAdded: new Date() };
     const updatedFavorites = [...storedFavorites, newFavorite];
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    console.log('Added to favorites:', newFavorite); // Debugging statement
+   
   };
 
   return (

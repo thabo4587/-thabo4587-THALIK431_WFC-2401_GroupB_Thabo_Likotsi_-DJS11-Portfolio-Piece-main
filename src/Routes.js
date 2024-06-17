@@ -8,6 +8,7 @@ import Footer from './Footer';
 import ShowDetail from './ShowDetails';
 import Favourites from './Favourites';
 
+//state for rendering header and footer
 function RoutesComponent({ addToFavorites }) {
   const location = useLocation();
   const [showHeader, setShowHeader] = useState(true);
@@ -16,7 +17,7 @@ function RoutesComponent({ addToFavorites }) {
   useEffect(() => {
     if (location.pathname === '/' || location.pathname === '/login') {
       setShowHeader(false);
-      setShowFooter(false);
+      setShowFooter(true); //change to remove footer
     } else {
       setShowHeader(true);
       setShowFooter(true);

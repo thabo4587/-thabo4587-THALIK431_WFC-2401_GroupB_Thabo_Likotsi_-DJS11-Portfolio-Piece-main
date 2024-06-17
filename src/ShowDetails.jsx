@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { selectedPodcast } = usePodcast();
+  const { selectedPodcast } = usePodcast(); //using context imported
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,17 +38,6 @@ const ShowDetail = ({ addToFavorites }) => {
     }
   }, [id, selectedPodcast]);
 
- // const handleBackClick = () => {
-  //  navigate(-1);
- // };
-
- // const handleResetProgress = () => {
-  //  if (audioRef.current) {
-   //   audioRef.current.currentTime = 0;
-   //   setAudioProgress(0);
-   //   setIsPlaying(false);
- //   }
- // };
 
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
@@ -60,7 +49,7 @@ const ShowDetail = ({ addToFavorites }) => {
 
   const handleAudioPause = () => {
     if (audioRef.current) {
-      audioRef.current.pause();
+      audioRef.current.pause(); //pausing sound
       setIsPlaying(false);
     }
   };
@@ -69,7 +58,7 @@ const ShowDetail = ({ addToFavorites }) => {
     const currentTime = audioRef.current.currentTime;
     setAudioProgress(currentTime);
   };
-
+//function imported as a prop for the button
   const handleAddToFavorites = (episode) => {
     addToFavorites(episode, showDetails.title, selectedSeason);
     alert(`Added ${episode.title} to Favorites!`);
@@ -98,8 +87,7 @@ const ShowDetail = ({ addToFavorites }) => {
             <img
               src={showDetails.image}
               alt={showDetails.title}
-              className="detail-image w-full h-auto"
-            />
+              className="detail-image w-full h-auto lg:mb-60 mt-3" />
           </div>
           <div className="md:w-2/3 md:pl-6">
             <h1 className="text-3xl font-bold text-blue-700 mb-2">
@@ -148,7 +136,7 @@ const ShowDetail = ({ addToFavorites }) => {
                         Your browser does not support the audio element.
                       </audio>
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                        className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-2"
                         onClick={() => handleAddToFavorites(episode)}
                       >
                         Add to Favorites
@@ -172,3 +160,18 @@ ShowDetail.propTypes = {
 };
 
 export default ShowDetail;
+
+
+
+
+
+
+
+
+ // const handleResetProgress = () => {
+  //  if (audioRef.current) {
+   //   audioRef.current.currentTime = 0;
+   //   setAudioProgress(0);
+   //   setIsPlaying(false);
+ //   }
+ // };

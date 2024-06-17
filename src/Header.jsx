@@ -17,15 +17,15 @@ function Header() {
           <NavLink
             to="/"
             exact
-            className="text-white font-bold px-4 py-2 rounded-md mx-2 hover:bg-blue-600"
-            activeClassName="bg-blue-600"
+            className="text-white font-bold px-4 py-2 rounded-md mx-2  hover:bg-red-700"
+            activeClassName="bg-orange-600"
           >
             Home
           </NavLink>
           <NavLink
             to="/favorites"
-            className="text-white font-bold px-4 py-2 rounded-md mx-2 hover:bg-blue-600"
-            activeClassName="bg-blue-600"
+            className="text-white font-bold px-4 py-2 rounded-md mx-2 hover:bg-red-700"
+            activeClassName="bg-orange-600"
           >
             Favorites
           </NavLink>
