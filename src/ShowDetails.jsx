@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { selectedPodcast } = usePodcast(); //using context imported
+  const { selectedPodcast } = usePodcast();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,7 +38,6 @@ const ShowDetail = ({ addToFavorites }) => {
     }
   }, [id, selectedPodcast]);
 
-
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
   };
@@ -49,7 +48,7 @@ const ShowDetail = ({ addToFavorites }) => {
 
   const handleAudioPause = () => {
     if (audioRef.current) {
-      audioRef.current.pause(); //pausing sound
+      audioRef.current.pause();
       setIsPlaying(false);
     }
   };
@@ -58,7 +57,7 @@ const ShowDetail = ({ addToFavorites }) => {
     const currentTime = audioRef.current.currentTime;
     setAudioProgress(currentTime);
   };
-//function imported as a prop for the button
+
   const handleAddToFavorites = (episode) => {
     addToFavorites(episode, showDetails.title, selectedSeason);
     alert(`Added ${episode.title} to Favorites!`);
@@ -109,7 +108,7 @@ const ShowDetail = ({ addToFavorites }) => {
                 </option>
                 {showDetails.seasons.map((season) => (
                   <option key={season.season} value={season.season}>
-                    {season.season}
+                    {`Season ${season.season} (${season.episodes.length} episodes)`}
                   </option>
                 ))}
               </select>
@@ -160,6 +159,7 @@ ShowDetail.propTypes = {
 };
 
 export default ShowDetail;
+
 
 
 
