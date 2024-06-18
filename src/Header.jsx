@@ -16,7 +16,29 @@ function Header() {
   return (
     <header className="bg-blue-500 py-4 relative">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold">AudioPod</h1>
+        <div className="flex items-center">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 100 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4" />
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              fill="white"
+              fontSize="48"
+              fontWeight="bold"
+              dy=".3em"
+            >
+              A
+            </text>
+          </svg>
+          <h1 className="text-white text-2xl font-bold ml-2">AudioPod</h1>
+        </div>
 
         {/* Hamburger Button */}
         <button
@@ -61,7 +83,7 @@ function Header() {
             Favorites
           </NavLink>
           <NavLink
-            to="/contact"  // Assuming you have a /contact route
+            to="/contact"
             className="text-white font-bold px-4 py-2 rounded-md mx-2 hover:bg-red-700 transition duration-300"
             activeClassName="bg-orange-600"
           >
