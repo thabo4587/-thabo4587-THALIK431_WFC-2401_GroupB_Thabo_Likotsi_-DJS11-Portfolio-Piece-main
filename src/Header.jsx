@@ -24,7 +24,7 @@ function Header() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4" />
+            <circle cx="50" cy="50" r="50" stroke="white" strokeWidth="4" />
             <text
               x="50%"
               y="50%"
@@ -46,19 +46,19 @@ function Header() {
           onClick={toggleMenu}
         >
           <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
+    className="h-6 w-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M4 6h16M4 12h16M4 18h16" 
+    />
+</svg>
         </button>
 
         {/* Navigation Links (Initially Hidden on Smaller Screens) */}
@@ -90,7 +90,7 @@ function Header() {
             Contact
           </NavLink>
           <button
-            className="text-white font-bold px-4 py-2 rounded-md mx-2 bg-transparent border border-white hover:bg-white hover:text-blue-500 focus:outline-none transition duration-300"
+            className="text-white font-bold mb-2 px-4 py-2 rounded-md mx-2 bg-transparent border border-white hover:bg-white hover:text-blue-500 focus:outline-none transition duration-300"
             onClick={handleResetHistory}
           >
             LogOut
