@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+//this code simply extracts from localstorage
+//does not utilize function prop
+//state variables for filtering and favourites
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [filterOption, setFilterOption] = useState('none');
@@ -9,7 +12,6 @@ const Favorites = () => {
   //This block of code accesses the favourites stored in local storage
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    console.log('Stored favorites:', storedFavorites); // Debugging statement
     setFavorites(storedFavorites);
   }, []);
 
@@ -17,7 +19,6 @@ const Favorites = () => {
   const removeFromFavorites = (episodeTitle) => {
     const updatedFavorites = favorites.filter(fav => fav.episode.title !== episodeTitle);
     setFavorites(updatedFavorites);
-    console.log('Removed favorite:', episodeTitle); // Debugging statement
   };
 
   //Removing favourites
@@ -26,7 +27,7 @@ const Favorites = () => {
   };
 
 
-  //same sorting function need to save this as a utility function and import it
+  //same sorting function need to save this as a utility function and imported
   const sortedFavorites = [...favorites].sort((a, b) => {
     switch (filterOption) {
       case 'titleAsc':

@@ -14,16 +14,18 @@ function RoutesComponent({ addToFavorites }) {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
 
+
+  //login page and signup page toggling nav and foot upon render
   useEffect(() => {
     if (location.pathname === '/' || location.pathname === '/login') {
       setShowHeader(false);
-      setShowFooter(true); //change to remove footer
+      setShowFooter(true); //change to remove footer from sign up form
     } else {
       setShowHeader(true);
       setShowFooter(true);
     }
   }, [location.pathname]);
-
+//dependency array is path so it listens to changes in the path
   return (
     <>
       {showHeader && <Header />}

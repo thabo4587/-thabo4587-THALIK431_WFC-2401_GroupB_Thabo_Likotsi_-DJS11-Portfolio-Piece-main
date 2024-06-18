@@ -69,30 +69,29 @@ Favorites are persisted in localStorage:
 User can reset listening history:
 User sees the number of episodes in a season on the details page:
 Still struggling with favorites page....
+User can see how many episodes a season has.
+User can go back from a season-specific view to a show view:
+Need to fix loading states: (Ensure loading spinners or indicators are in place)
+User can listen to any episode in a season for a show: (placeholder audio track)
+Audio player is always visible where?:
+Audio player shows listening progress :
+
 
 
 ## Updated To-List
 
-
 ## Audio Player
-Audio player is always visible:
-Fix Audio files
-Audio player shows listening progress:
-App remembers episodes listened to all the way through
-User can listen to any episode in a season for a show: (placeholder audio track)
-User can see how many episodes a season has 
+App remembers episodes listened to all the way through???
 
+ensure audio plays on favourites
 
-## Core Functionality:
+finish reset button logic
+
 I need to fix my file structure and seperate components and pages
 
-User can go back from a season-specific view to a show view:
-
-Need to fix loading states: (Ensure loading spinners or indicators are in place)
 
 
-
-## Add UI Enhancements Extras
+## Add UI Enhancements optional Extras
 A Spring hover animations (e.g., to buttons and navbars)
 
 build preview info modal. 

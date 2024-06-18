@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import RoutesComponent from './Routes'; // Make sure RoutesComponent is correctly imported
 import { PodcastProvider } from './PodCastContext';
 
-// function to add favourites is a prop 
+// function to add to favourites is used as a prop 
 //details page is rendered using context API to ensure data is fetched properly
 function App() {
   const addToFavorites = (episode, show, season) => {
@@ -14,6 +14,8 @@ function App() {
    
   };
 
+
+  //the route component encapsulates all other routes.
   return (
     <PodcastProvider>
       <Router>

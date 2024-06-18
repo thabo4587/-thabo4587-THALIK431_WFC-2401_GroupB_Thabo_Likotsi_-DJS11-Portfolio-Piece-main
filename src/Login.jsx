@@ -20,10 +20,10 @@ const navigate = useNavigate();
 
 const goToSignUp = () => {
   navigate('/');
-
 }
 
 
+// render login form with JSX
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-gray-800 p-8 rounded shadow-md w-96">

@@ -9,6 +9,7 @@ function Footer() {
     { name: 'LinkedIn', icon: FaLinkedin, url: 'https://www.linkedin.com/' },
   ];
 
+  
   return (
     <footer className="footer bg-gray-800 text-white py-4">
       <div className="container mx-auto flex justify-center items-center space-x-4"> 

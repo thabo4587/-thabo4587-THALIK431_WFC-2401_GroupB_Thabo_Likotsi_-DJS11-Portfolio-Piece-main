@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePodcast } from './PodCastContext';
 import PropTypes from 'prop-types';
+//using prop types for error handling giving robust code
+
 
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { selectedPodcast } = usePodcast();
+  const { selectedPodcast } = usePodcast(); //using context imported
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,6 +17,7 @@ const ShowDetail = ({ addToFavorites }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
+  //fetching data from second endpoint with seasons and audio data
   useEffect(() => {
     if (selectedPodcast && selectedPodcast.id === id) {
       setShowDetails(selectedPodcast);
@@ -38,31 +41,36 @@ const ShowDetail = ({ addToFavorites }) => {
     }
   }, [id, selectedPodcast]);
 
+//handling the select season dropdown
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
   };
 
+  //function for playing the audio
   const handleAudioPlay = () => {
     setIsPlaying(true);
   };
 
+    //function for pausing the audio
   const handleAudioPause = () => {
     if (audioRef.current) {
-      audioRef.current.pause();
+      audioRef.current.pause(); //pausing sound
       setIsPlaying(false);
     }
   };
-
+//function for updating the time
   const handleAudioTimeUpdate = () => {
     const currentTime = audioRef.current.currentTime;
     setAudioProgress(currentTime);
   };
-
+//function imported as a prop for the button to add to favourites
+// this uses abstraction and props
   const handleAddToFavorites = (episode) => {
     addToFavorites(episode, showDetails.title, selectedSeason);
     alert(`Added ${episode.title} to Favorites!`);
   };
 
+  //loading states
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -77,10 +85,7 @@ const ShowDetail = ({ addToFavorites }) => {
 
   return (
     <>
-      <div className="flex justify-center">
-      </div>
-
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-8xl mx-auto ml-4">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3">
             <img
@@ -108,7 +113,7 @@ const ShowDetail = ({ addToFavorites }) => {
                 </option>
                 {showDetails.seasons.map((season) => (
                   <option key={season.season} value={season.season}>
-                    {`Season ${season.season} (${season.episodes.length} episodes)`}
+                    {season.season}
                   </option>
                 ))}
               </select>
@@ -140,9 +145,7 @@ const ShowDetail = ({ addToFavorites }) => {
                       >
                         Add to Favorites
                       </button>
-                      <p className="text-gray-700">
-                        Current Progress: {audioProgress.toFixed(2)} seconds
-                      </p>
+                     
                     </div>
                   ))}
               </div>
@@ -154,11 +157,19 @@ const ShowDetail = ({ addToFavorites }) => {
   );
 };
 
+
 ShowDetail.propTypes = {
   addToFavorites: PropTypes.func.isRequired,
 };
 
 export default ShowDetail;
+
+
+
+
+//<p className="text-gray-700">
+//Current Progress: {audioProgress.toFixed(2)} seconds
+//</p>
 
 
 

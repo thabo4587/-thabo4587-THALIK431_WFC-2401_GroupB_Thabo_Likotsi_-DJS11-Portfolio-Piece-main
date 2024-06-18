@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // genre mapping object to display podcast shows genres
+// this mapping will help with filtering
 const genreMapping = {
   1: 'Personal Growth',
   2: 'Investigative Journalism',
@@ -14,19 +15,21 @@ const genreMapping = {
   9: 'Kids and Family'
 };
 
+//HomePage component
 function HomePage() {
   const [previews, setPreviews] = useState([]);
   const [filteredPreviews, setFilteredPreviews] = useState([]);
   const [filterOption, setFilterOption] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("none");
-  const [loading, setLoading] = useState(true); // Add loading state
-  const [error, setError] = useState(null); // Add error state
-  const [showDetails, setShowDetails] = useState(false); // Add showDetails state
+  const [loading, setLoading] = useState(true); // Added loading state
+  const [error, setError] = useState(null); // Added error state
+  const [showDetails, setShowDetails] = useState(false); // Added showDetails state
   const navigate = useNavigate();
 
+  //fetching data from API
   useEffect(() => {
-    setLoading(true); // Set loading to true before fetching data
+    setLoading(true); // Set loading to true before fetching data for loading state
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
@@ -42,19 +45,32 @@ function HomePage() {
       });
   }, []);
 
-  useEffect(() => {
-    if (searchTerm.trim() === "" && selectedGenre === "none") {
-      setFilteredPreviews(previews);
-    } else {
-      const searchResults = previews.filter(show => {
-        const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesGenre = selectedGenre === "none" || (show.genres && show.genres.includes(parseInt(selectedGenre)));
-        return matchesSearch && matchesGenre;
-      });
-      setFilteredPreviews(searchResults);
-    }
-  }, [searchTerm, selectedGenre, previews]);
 
+
+// useEffect hook runs the provided function after rendering, and only re-runs if dependencies change.
+useEffect(() => {
+  // Check if searchTerm is empty (after trimming) and selectedGenre is "none".
+  if (searchTerm.trim() === "" && selectedGenre === "none") {
+    // If both conditions are true, set filtered previews to the original previews array.
+    setFilteredPreviews(previews);
+  } else {
+    // Otherwise, filter the previews based on searchTerm and selectedGenre.
+    const searchResults = previews.filter(show => {
+      // Check if the show's title matches the searchTerm (case insensitive).
+      const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase());
+      // Check if the selected genre is "none" or the show's genres include the selected genre.
+      const matchesGenre = selectedGenre === "none" || (show.genres && show.genres.includes(parseInt(selectedGenre)));
+      // Return true if both conditions are met, thus including the show in the searchResults.
+      return matchesSearch && matchesGenre;
+    });
+    // Update the filteredPreviews state with the search results.
+    setFilteredPreviews(searchResults);
+  }
+// Dependencies array for useEffect, it will re-run the effect if any of these values change.
+}, [searchTerm, selectedGenre, previews]);
+
+
+  //same function in favourites to sort previews
   const sortPreviews = (previews) => {
     switch (filterOption) {
       case "titleAsc":
@@ -74,6 +90,7 @@ function HomePage() {
     navigate('/favorites');
   };
 
+  // Navigate to details page where you will play the sound
   const handleMoreInfoClick = (showId) => {
     navigate(`/showdetails/${showId}`);
   };
