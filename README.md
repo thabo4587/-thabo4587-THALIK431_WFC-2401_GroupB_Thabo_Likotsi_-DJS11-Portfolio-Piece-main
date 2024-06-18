@@ -89,20 +89,11 @@ finish reset button logic
 
 I need to fix my file structure and seperate components and pages
 
-
-
-## Add UI Enhancements optional Extras
-A Spring hover animations (e.g., to buttons and navbars)
-
 build preview info modal. 
 
 Use Material UI for styled buttons:
 
 Add play  icon shadow hover effect using react icons
 
-Design a favicon and logo using canvas:
-Fix navigation bar
-
-Need to add a hamburger responsive menu for page navigation.
-
+Design a favicon mostly html
 

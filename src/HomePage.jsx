@@ -119,7 +119,7 @@ useEffect(() => {
           <label htmlFor="filterOption" className="mr-2 font-semibold">Sort By:</label>
           <select
             id="filterOption"
-            className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-2 py-1 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filterOption}
             onChange={(e) => setFilterOption(e.target.value)}
           >
@@ -134,7 +134,7 @@ useEffect(() => {
           <label htmlFor="genreFilter" className="mr-2 font-semibold">Filter By Genre:</label>
           <select
             id="genreFilter"
-            className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-2 py-1 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={selectedGenre}
             onChange={(e) => setSelectedGenre(e.target.value)}
           >

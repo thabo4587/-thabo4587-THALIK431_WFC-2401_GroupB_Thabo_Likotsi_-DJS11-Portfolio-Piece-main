@@ -24,7 +24,7 @@ function Header() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <circle cx="50" cy="50" r="50" stroke="white" strokeWidth="4" />
+            <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4" />
             <text
               x="50%"
               y="50%"
