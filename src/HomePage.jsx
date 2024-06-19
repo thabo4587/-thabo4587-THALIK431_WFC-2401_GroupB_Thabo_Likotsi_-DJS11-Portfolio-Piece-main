@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// genre mapping object to display podcast shows genres
-// this mapping will help with filtering
 const genreMapping = {
   1: 'Personal Growth',
   2: 'Investigative Journalism',
@@ -15,62 +13,73 @@ const genreMapping = {
   9: 'Kids and Family'
 };
 
-//HomePage component
-function HomePage() {
+const HomePage = () => {
   const [previews, setPreviews] = useState([]);
   const [filteredPreviews, setFilteredPreviews] = useState([]);
-  const [filterOption, setFilterOption] = useState("none");
+  const [filterOption, setFilterOption] = useState("titleAsc"); // Default sort by title A-Z
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("none");
-  const [loading, setLoading] = useState(true); // Added loading state
-  const [error, setError] = useState(null); // Added error state
-  const [showDetails, setShowDetails] = useState(false); // Added showDetails state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false); // Track if audio is playing
   const navigate = useNavigate();
 
-  //fetching data from API
+  // Fetch data from API
   useEffect(() => {
-    setLoading(true); // Set loading to true before fetching data for loading state
+    setLoading(true);
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
         setPreviews(data);
         setFilteredPreviews(data);
-        setLoading(false); // Set loading to false after data is fetched
-        setShowDetails(data.length > 0); // Check if shows are available
+        setLoading(false);
+        setShowDetails(data.length > 0);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setError(error.message); // Set error message
-        setLoading(false); // Set loading to false even if there's an error
+        setError(error.message);
+        setLoading(false);
       });
   }, []);
 
+  // Effect to add beforeunload listener
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (isAudioPlaying) {
+        // Cancel the event (so that the browser doesn't close immediately)
+        event.preventDefault();
+        // Chrome requires returnValue to be set
+        event.returnValue = '';
+        // Display a confirmation prompt
+        return 'Audio is currently playing. Are you sure you want to leave?';
+      }
+    };
 
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
-// useEffect hook runs the provided function after rendering, and only re-runs if dependencies change.
-useEffect(() => {
-  // Check if searchTerm is empty (after trimming) and selectedGenre is "none".
-  if (searchTerm.trim() === "" && selectedGenre === "none") {
-    // If both conditions are true, set filtered previews to the original previews array.
-    setFilteredPreviews(previews);
-  } else {
-    // Otherwise, filter the previews based on searchTerm and selectedGenre.
-    const searchResults = previews.filter(show => {
-      // Check if the show's title matches the searchTerm (case insensitive).
-      const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase());
-      // Check if the selected genre is "none" or the show's genres include the selected genre.
-      const matchesGenre = selectedGenre === "none" || (show.genres && show.genres.includes(parseInt(selectedGenre)));
-      // Return true if both conditions are met, thus including the show in the searchResults.
-      return matchesSearch && matchesGenre;
-    });
-    // Update the filteredPreviews state with the search results.
-    setFilteredPreviews(searchResults);
-  }
-// Dependencies array for useEffect, it will re-run the effect if any of these values change.
-}, [searchTerm, selectedGenre, previews]);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isAudioPlaying]);
 
+  // Handle audio play event
+  const handleAudioPlay = () => {
+    setIsAudioPlaying(true);
+  };
 
-  //same function in favourites to sort previews
+  // Handle audio pause event
+  const handleAudioPause = () => {
+    setIsAudioPlaying(false);
+  };
+
+  // Handle form submission if needed
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Logic for form submission
+  };
+
+  // Sort previews based on selected filter option
   const sortPreviews = (previews) => {
     switch (filterOption) {
       case "titleAsc":
@@ -82,38 +91,115 @@ useEffect(() => {
       case "dateDesc":
         return [...previews].sort((a, b) => new Date(b.updated) - new Date(a.updated));
       default:
-        return previews;
+        return [...previews].sort((a, b) => a.title.localeCompare(b.title)); // Default to titleAsc
     }
   };
 
-  const handleFavouritesClick = () => {
+  // Filter previews based on search term and selected genre
+  useEffect(() => {
+    if (searchTerm.trim() === "" && selectedGenre === "none") {
+      setFilteredPreviews(previews);
+    } else {
+      const searchResults = previews.filter(show => {
+        const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesGenre = selectedGenre === "none" || (show.genres && show.genres.includes(parseInt(selectedGenre)));
+        return matchesSearch && matchesGenre;
+      });
+      setFilteredPreviews(searchResults);
+    }
+  }, [searchTerm, selectedGenre, previews]);
+
+  // Navigate to favorites page
+  const handleFavoritesClick = () => {
+    if (isAudioPlaying && !window.confirm('Audio is currently playing. Are you sure you want to leave?')) {
+      return;
+    }
     navigate('/favorites');
   };
 
-  // Navigate to details page where you will play the sound
+  // Navigate to show details page
   const handleMoreInfoClick = (showId) => {
+    if (isAudioPlaying && !window.confirm('Audio is currently playing. Are you sure you want to leave?')) {
+      return;
+    }
     navigate(`/showdetails/${showId}`);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can add more logic here if needed
-  };
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center mt-8">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-center mt-8">Error: {error}</div>;
   }
 
   if (!showDetails) {
-    return <div>No shows available.</div>;
+    return <div className="text-center mt-8">No shows available.</div>;
   }
 
   return (
     <main className="main-content">
+      {/* Audio player section */}
+      <div className="audio-player bg-blue-500 p-4 shadow-md mb-6">
+        <h2 className="text-white text-lg font-semibold mb-2">Currently Playing</h2>
+        <audio
+          className="w-full bg-blue-500"
+          controls
+          onPlay={handleAudioPlay}
+          onPause={handleAudioPause}
+        >
+          <source src="https://podcast-api.netlify.app/placeholder-audio.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+
+        <div className="mt-4 text-white">
+          <h3 className="text-xl font-semibold">Something Was Wrong</h3>
+          <div className="mt-4">
+            <p><span className="font-semibold">Season:</span> 2</p>
+            <p><span className="font-semibold">Episode 1:</span> She Had the Medical Mind</p>
+          </div>
+          
+          <div className="flex items-center mt-4 space-x-4">
+            {/* Seek Backward Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-white cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              onClick={() => {} /* Handle Seek Backward Action */}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+
+            {/* Pause Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-white cursor-pointer"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              onClick={() => {} /* Handle Pause Action */}
+            >
+              <rect x="5" y="5" width="4" height="10" />
+              <rect x="11" y="5" width="4" height="10" />
+            </svg>
+
+            {/* Seek Forward Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-white cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              onClick={() => {} /* Handle Seek Forward Action */}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Sort and filter section */}
       <div className="flex justify-between items-center mb-4">
         <div>
           <label htmlFor="filterOption" className="mr-2 font-semibold">Sort By:</label>
@@ -123,7 +209,6 @@ useEffect(() => {
             value={filterOption}
             onChange={(e) => setFilterOption(e.target.value)}
           >
-            <option value="none">None</option>
             <option value="titleAsc">Title A-Z</option>
             <option value="titleDesc">Title Z-A</option>
             <option value="dateAsc">Oldest First</option>
@@ -146,16 +231,18 @@ useEffect(() => {
         </div>
       </div>
 
+      {/* Search form */}
       <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
-          className="w-full md:w-96 sm:w-80 px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </form>
 
+      {/* List of previews */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {sortPreviews(filteredPreviews).map((preview) => (
           <div key={preview.id} className="bg-white shadow-lg rounded-lg overflow-hidden">

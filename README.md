@@ -75,25 +75,33 @@ Need to fix loading states: (Ensure loading spinners or indicators are in place)
 User can listen to any episode in a season for a show: (placeholder audio track)
 Audio player is always visible where?:
 Audio player shows listening progress :
-
+User sees shows sorted alphabetically when the app loads (default sorting):
+There is a loading state while new data is being loaded(material UI loading icon added)
+ensure audio plays on favourites
+Audio player is always visible so that user can listen to episodes while browsing	
 
 
 ## Updated To-List
 
 ## Audio Player
-App remembers episodes listened to all the way through???
+App remembers episodes listened to all the way through???????
 
-ensure audio plays on favourites
+Related by season/show episodes are grouped together in favourites?????
+
+Install ESL Lint
 
 finish reset button logic
 
 I need to fix my file structure and seperate components and pages
 
-build preview info modal. 
-
 Use Material UI for styled buttons:
 
-Add play  icon shadow hover effect using react icons
-
 Design a favicon mostly html
+
+Add dropdown menu for description and 
+create shorter description function
+
+Audio player must show listening progress	
+
+User receives a notification  alert that confirms they want to close or route to different pagr the page when audio is playing
 
