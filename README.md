@@ -66,6 +66,8 @@ This command runs the development server and opens the AudioPod application in y
 
 Access the Application
 
+Netlify URL:https://whimsical-sprinkles-e8a717.netlify.app/
+
 Once the development server has started successfully, you can access AudioPod by navigating to http://localhost:3000 in your web browser.
 
 ### Overview
