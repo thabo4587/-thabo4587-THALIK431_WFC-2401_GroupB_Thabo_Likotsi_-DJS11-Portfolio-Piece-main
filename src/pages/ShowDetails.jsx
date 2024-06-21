@@ -171,14 +171,7 @@ const ShowDetail = ({ addToFavorites }) => {
                   ))}
               </div>
             )}
-            <div className="mb-4">
-              <h4 className="text-lg font-bold text-gray-800">Genres:</h4>
-              <p className="text-gray-700">
-                {showDetails.genres && showDetails.genres.length > 0
-                  ? showDetails.genres.map(genreId => genreMapping[genreId]).join(', ')
-                  : 'No genres available.'}
-              </p>
-            </div>
+         
           </div>
         </div>
       </div>

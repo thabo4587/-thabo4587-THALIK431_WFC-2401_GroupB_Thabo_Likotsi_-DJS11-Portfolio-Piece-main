@@ -25,6 +25,10 @@ const HomePage = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false); // Track if audio is playing
   const navigate = useNavigate();
 
+  // Carousel state
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCarouselActive, setIsCarouselActive] = useState(true);
+
   // Fetch data from API
   useEffect(() => {
     setLoading(true);
@@ -43,25 +47,19 @@ const HomePage = () => {
       });
   }, []);
 
-  // Effect to add beforeunload listener
+  // Auto-slide effect for carousel
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      if (isAudioPlaying) {
-        // Cancel the event (so that the browser doesn't close immediately)
-        event.preventDefault();
-        // Chrome requires returnValue to be set
-        event.returnValue = '';
-        // Display a confirmation prompt
-        return 'Audio is currently playing. Are you sure you want to leave?';
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    let interval;
+    if (isCarouselActive && previews.length > 0) {
+      interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % previews.length);
+      }, 5000); // Change slide interval as needed (in milliseconds)
+    }
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      clearInterval(interval);
     };
-  }, [isAudioPlaying]);
+  }, [isCarouselActive, previews.length]);
 
   // Handle audio play event
   const handleAudioPlay = () => {
@@ -153,10 +151,10 @@ const HomePage = () => {
         </audio>
 
         <div className="mt-4 text-white">
-          <h3 className="text-xl font-semibold">Something Was Wrong</h3>
+          <h3 className="text-xl font-semibold">{previews[currentIndex].title}</h3>
           <div className="mt-4">
-            <p><span className="font-semibold">Season:</span> 2</p>
-            <p><span className="font-semibold">Episode 1:</span> She Had the Medical Mind</p>
+            <p><span className="font-semibold">Season:</span> {previews[currentIndex].season}</p>
+            <p><span className="font-semibold">Episode 1:</span> {previews[currentIndex].episode}</p>
           </div>
           
           <div className="flex items-center mt-4 space-x-4">
@@ -242,6 +240,44 @@ const HomePage = () => {
         />
       </form>
 
+      {/* Carousel */}
+      <div className="relative mb-6">
+        {previews.length > 0 && (
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img className="w-full lg:h-auto% md:h-auto sm:h-auto object-cover rounded"
+             src={previews[currentIndex].image}
+             style={{ maxHeight: '60%'}}
+             alt={previews[currentIndex].title} />
+            <div className="px-6 py-4">
+              <h3 className="text-xl font-semibold mt-2">{previews[currentIndex].title}</h3>
+              <button 
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
+                onClick={() => handleMoreInfoClick(previews[currentIndex].id)}
+              >
+                More Info
+              </button>
+              <p className="text-gray-700">Seasons: {previews[currentIndex].seasons}</p>
+              <p className="text-gray-700">Genres: {previews[currentIndex].genres && previews[currentIndex].genres.map(id => genreMapping[id]).join(', ')}</p>
+              <p className="text-gray-700">Last Updated: {previews[currentIndex].updated ? new Date(previews[currentIndex].updated).toLocaleDateString() : 'N/A'}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Carousel navigation */}
+        <button
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-md"
+          onClick={() => setCurrentIndex((prevIndex) => (prevIndex === 0 ? previews.length - 1 : prevIndex - 1))}
+        >
+          Prev
+        </button>
+        <button
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-md"
+          onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % previews.length)}
+        >
+          Next
+        </button>
+      </div>
+
       {/* List of previews */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {sortPreviews(filteredPreviews).map((preview) => (
@@ -267,3 +303,4 @@ const HomePage = () => {
 }
 
 export default HomePage;
+
