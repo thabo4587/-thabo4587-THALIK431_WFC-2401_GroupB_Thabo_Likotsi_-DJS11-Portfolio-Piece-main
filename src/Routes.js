@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Login from './Login';
-import SignUp from './SignUp';
-import Header from './Header';
-import HomePage from './HomePage';
-import Footer from './Footer';
-import ShowDetail from './ShowDetails';
-import Favourites from './Favourites';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+import Footer from './components/Footer';
+import ShowDetail from './pages/ShowDetails';
+import Favourites from './pages/Favourites';
 
 //state for rendering header and footer
 function RoutesComponent({ addToFavorites }) {
