@@ -3,6 +3,18 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { usePodcast } from '../PodCastContext';
 import PropTypes from 'prop-types';
 
+const genreMapping = {
+  1: 'Personal Growth',
+  2: 'Investigative Journalism',
+  3: 'History',
+  4: 'Comedy',
+  5: 'Entertainment',
+  6: 'Business',
+  7: 'Fiction',
+  8: 'News',
+  9: 'Kids and Family'
+};
+
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -159,6 +171,14 @@ const ShowDetail = ({ addToFavorites }) => {
                   ))}
               </div>
             )}
+            <div className="mb-4">
+              <h4 className="text-lg font-bold text-gray-800">Genres:</h4>
+              <p className="text-gray-700">
+                {showDetails.genres && showDetails.genres.length > 0
+                  ? showDetails.genres.map(genreId => genreMapping[genreId]).join(', ')
+                  : 'No genres available.'}
+              </p>
+            </div>
           </div>
         </div>
       </div>
