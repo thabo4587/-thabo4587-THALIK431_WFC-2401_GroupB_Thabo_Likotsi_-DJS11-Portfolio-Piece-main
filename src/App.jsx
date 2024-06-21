@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RoutesComponent from './Routes'; // Make sure RoutesComponent is correctly imported
 import { PodcastProvider } from './PodCastContext';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
 
 // function to add to favourites is used as a prop 
 // details page is rendered using context API to ensure data is fetched properly

@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { usePodcast } from './PodCastContext';
+import { usePodcast } from '../PodCastContext';
 import PropTypes from 'prop-types';
-//using prop types for error handling giving robust code
-
 
 const ShowDetail = ({ addToFavorites }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { selectedPodcast } = usePodcast(); //using context imported
+  const { selectedPodcast } = usePodcast();
   const [showDetails, setShowDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +15,6 @@ const ShowDetail = ({ addToFavorites }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
-  //fetching data from second endpoint with seasons and audio data
   useEffect(() => {
     if (selectedPodcast && selectedPodcast.id === id) {
       setShowDetails(selectedPodcast);
@@ -41,36 +38,39 @@ const ShowDetail = ({ addToFavorites }) => {
     }
   }, [id, selectedPodcast]);
 
-//handling the select season dropdown
   const handleSeasonSelect = (event) => {
     setSelectedSeason(event.target.value);
   };
 
-  //function for playing the audio
   const handleAudioPlay = () => {
     setIsPlaying(true);
   };
 
-    //function for pausing the audio
   const handleAudioPause = () => {
     if (audioRef.current) {
-      audioRef.current.pause(); //pausing sound
+      audioRef.current.pause();
       setIsPlaying(false);
     }
   };
-//function for updating the time
+
   const handleAudioTimeUpdate = () => {
     const currentTime = audioRef.current.currentTime;
     setAudioProgress(currentTime);
   };
-//function imported as a prop for the button to add to favourites
-// this uses abstraction and props
+
   const handleAddToFavorites = (episode) => {
     addToFavorites(episode, showDetails.title, selectedSeason);
     alert(`Added ${episode.title} to Favorites!`);
   };
 
-  //loading states
+  const handleResetProgress = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      setAudioProgress(0);
+      setIsPlaying(false);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -91,7 +91,8 @@ const ShowDetail = ({ addToFavorites }) => {
             <img
               src={showDetails.image}
               alt={showDetails.title}
-              className="detail-image w-full h-auto lg:mb-60 mt-3" />
+              className="detail-image w-full h-auto lg:mb-60 mt-3"
+            />
           </div>
           <div className="md:w-2/3 md:pl-6">
             <h1 className="text-3xl font-bold text-blue-700 mb-2">
@@ -113,7 +114,7 @@ const ShowDetail = ({ addToFavorites }) => {
                 </option>
                 {showDetails.seasons.map((season) => (
                   <option key={season.season} value={season.season}>
-                    {season.season}
+                    {`Season ${season.season} (${season.episodes.length} episodes)`}
                   </option>
                 ))}
               </select>
@@ -145,7 +146,15 @@ const ShowDetail = ({ addToFavorites }) => {
                       >
                         Add to Favorites
                       </button>
-                     
+                      <button
+                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full mt-2 ml-2"
+                        onClick={handleResetProgress}
+                      >
+                        Reset Progress
+                      </button>
+                      <p className="text-gray-700 mt-2">
+                        Current Progress: {audioProgress.toFixed(2)} seconds
+                      </p>
                     </div>
                   ))}
               </div>
@@ -157,32 +166,8 @@ const ShowDetail = ({ addToFavorites }) => {
   );
 };
 
-
 ShowDetail.propTypes = {
   addToFavorites: PropTypes.func.isRequired,
 };
 
 export default ShowDetail;
-
-
-
-
-//<p className="text-gray-700">
-//Current Progress: {audioProgress.toFixed(2)} seconds
-//</p>
-
-
-
-
-
-
-
-
-
- // const handleResetProgress = () => {
-  //  if (audioRef.current) {
-   //   audioRef.current.currentTime = 0;
-   //   setAudioProgress(0);
-   //   setIsPlaying(false);
- //   }
- // };

@@ -93,16 +93,9 @@ Related by season/show episodes are grouped together in favourites?????
 
 Design a favicon mostly html
 
-finish reset button logic
-
-hover play icon svg
-
 Use Material UI for styled buttons:
 
-
-
-Add dropdown menu for description and 
-create shorter description function
+build a carousel
 
 ensure notification for closing while playing is global
 

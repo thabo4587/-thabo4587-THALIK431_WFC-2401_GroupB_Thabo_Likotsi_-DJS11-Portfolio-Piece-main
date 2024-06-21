@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Slider from 'react-slick';
 
 const genreMapping = {
   1: 'Personal Growth',
@@ -137,6 +138,41 @@ const HomePage = () => {
     return <div className="text-center mt-8">No shows available.</div>;
   }
 
+  // Carousel settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
   return (
     <main className="main-content">
       {/* Audio player section */}
@@ -242,26 +278,28 @@ const HomePage = () => {
         />
       </form>
 
-      {/* List of previews */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      {/* Carousel of previews */}
+      <Slider {...settings}>
         {sortPreviews(filteredPreviews).map((preview) => (
-          <div key={preview.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="px-6 py-4">
+          <div key={preview.id} className="p-2">
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <img className="w-full h-auto md:h-auto sm:h-auto object-cover rounded" src={preview.image} alt={preview.title} />
-              <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
-              <button 
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
-                onClick={() => handleMoreInfoClick(preview.id)}
-              >
-                More Info
-              </button>
-              <p className="text-gray-700">Seasons: {preview.seasons}</p>
-              <p className="text-gray-700">Genres: {preview.genres && preview.genres.map(id => genreMapping[id]).join(', ')}</p>
-              <p className="text-gray-700">Last Updated: {preview.updated ? new Date(preview.updated).toLocaleDateString() : 'N/A'}</p>
+              <div className="px-6 py-4">
+                <h3 className="text-xl font-semibold mt-2">{preview.title}</h3>
+                <button 
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 my-4 mx-2 rounded" 
+                  onClick={() => handleMoreInfoClick(preview.id)}
+                >
+                  More Info
+                </button>
+                <p className="text-gray-700">Seasons: {preview.seasons}</p>
+                <p className="text-gray-700">Genres: {preview.genres && preview.genres.map(id => genreMapping[id]).join(', ')}</p>
+                <p className="text-gray-700">Last Updated: {preview.updated ? new Date(preview.updated).toLocaleDateString() : 'N/A'}</p>
+              </div>
             </div>
           </div>
         ))}
-      </div>
+      </Slider>
     </main>
   );
 }
