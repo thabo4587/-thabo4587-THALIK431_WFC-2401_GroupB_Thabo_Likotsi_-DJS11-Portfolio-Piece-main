@@ -107,7 +107,3 @@ export default Favorites;
 
 
 
- // useEffect(() => {
- //   console.log('Favorites updated:', favorites); // Debugging statement
-  //  localStorage.setItem('favorites', JSON.stringify(favorites));
- // }, [favorites]);
