@@ -151,10 +151,10 @@ const HomePage = () => {
         </audio>
 
         <div className="mt-4 text-white">
-          <h3 className="text-xl font-semibold">{previews[currentIndex].title}</h3>
-          <div className="mt-4">
-            <p><span className="font-semibold">Season:</span> {previews[currentIndex].season}</p>
-            <p><span className="font-semibold">Episode 1:</span> {previews[currentIndex].episode}</p>
+        <h3 className="text-xl font-semibold">Something Was Wrong</h3>
+      <div className="mt-4">
+        <p><span className="font-semibold">Season:</span> 1</p>
+        <p><span className="font-semibold">Episode 1:</span> There Were No Red Flags</p>
           </div>
           
           <div className="flex items-center mt-4 space-x-4">
