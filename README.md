@@ -77,7 +77,7 @@ AudioPod is a podcast application designed to provide users with an immersive ex
 
 1. **User Authentication and Authorization**
    - **Sign Up and Login**: Users can create accounts securely with email and password, facilitating personalized experiences and access to premium features.
-   - **Authentication**: Secure user authentication ensures data privacy and protection.
+   - **Authentication**: I did not use supabase for authentication.
 
 2. **Podcast Discovery and Navigation**
    - **Browse and Search**: Enables users to explore podcasts by genre, title, or keyword search, enhancing discoverability.
@@ -96,7 +96,7 @@ AudioPod is a podcast application designed to provide users with an immersive ex
    - **Responsive Design**: Ensures compatibility across various devices and screen sizes, providing a consistent user experience.
    - **Performance Optimization**: Optimizes loading times and resource usage for smooth navigation and playback.
 
- User Stories
+ ### **User Stories
 Project is deployed to a custom Netlify URL
 
 All views in the app display correctly on the smallest mobile device available, “iPhone SE”. This can be emulated in Chrome Dev tools.
